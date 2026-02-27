@@ -4,7 +4,8 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/vce-physics-simulations/',
+  // Fixed: Updated to match your repository name exactly
+  base: '/vce-physics-sims/', 
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
