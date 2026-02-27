@@ -12,7 +12,8 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isHomePage = location.pathname === '/';
+  // Updated to handle subdirectory paths correctly
+  const isHomePage = location.pathname === '/' || location.pathname === '';
 
   const filteredSims = useMemo(() => {
     return PHYSICS_SIMS.filter(sim => {
@@ -27,15 +28,16 @@ const App: React.FC = () => {
     <div className="flex min-h-screen bg-zinc-950 text-zinc-100 font-['Plus_Jakarta_Sans']">
       <Sidebar 
         onFilter={setActiveFilter} 
-        onNavigate={(page) => navigate(page === 'home' ? '/' : `/${page}`)} 
+        // FIX: page navigation is now relative
+        onNavigate={(page) => navigate(page === 'home' ? '.' : page)} 
         activeFilter={activeFilter} 
-        activePage={isHomePage ? 'home' : (location.pathname.slice(1) as any)} 
+        activePage={isHomePage ? 'home' : (location.pathname.split('/').pop() as any)} 
       />
 
       <main className="flex-grow flex flex-col overflow-y-auto">
         <div className="flex-grow max-w-7xl w-full mx-auto px-6 py-12 lg:px-12">
           <Routes>
-            <Route path="/" element={
+            <Route index element={
               <div className="page-transition">
                 <header className="mb-12">
                   <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -63,7 +65,8 @@ const App: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                   {filteredSims.map(sim => (
-                    <div key={sim.id} onClick={() => navigate(`/sim/${sim.id}`)} className="cursor-pointer">
+                    // FIX: Removed leading slash for relative navigation
+                    <div key={sim.id} onClick={() => navigate(`sim/${sim.id}`)} className="cursor-pointer">
                       <SimCard sim={sim} />
                     </div>
                   ))}
@@ -71,8 +74,9 @@ const App: React.FC = () => {
               </div>
             } />
 
-            <Route path="/sim/:simId" element={
+            <Route path="sim/:simId" element={
               <div className="page-transition text-center py-20">
+                {/* FIX: navigate('.') or navigate(-1) to go back within the basename */}
                 <button onClick={() => navigate('/')} className="flex items-center gap-2 text-zinc-500 hover:text-white mb-8 mx-auto">
                   <ChevronLeft size={20} /> Back to Hub
                 </button>

@@ -1,24 +1,21 @@
-/* Standard Tailwind v3 Directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Variables and Theme Colors */
 :root {
-  --color-midnight: #020617;
-  --color-midnight-light: #0f172a;
-  --color-gold: #fbbf24;
-  --color-gold-dark: #d97706;
+  --midnight: #020617;
+  --gold: #fbbf24;
 }
 
-@layer base {
-  body {
-    background-color: var(--color-midnight);
-    color: #e2e8f0; /* slate-200 */
-    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+body {
+  @apply bg-[#020617] text-slate-200 antialiased;
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Fix for the "Coming Soon" styling */
+.glass-panel {
+  @apply bg-slate-900/50 backdrop-blur-md border border-white/10 rounded-2xl p-6;
 }
 
 @layer components {
