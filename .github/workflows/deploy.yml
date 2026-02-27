@@ -1,29 +1,47 @@
 name: Deploy VCE Physics Hub
+
 on:
   push:
     branches: ["main"]
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
+# Prevent multiple builds from running at the same time
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Install and Build
-        run: |
-          npm install
-          npm run build
+          cache: 'npm' # Speeds up future builds
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
+        env:
+          # This ensures Vite knows it's a production build
+          NODE_ENV: production 
+
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          # Vite always outputs to 'dist'
           path: ./dist
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
