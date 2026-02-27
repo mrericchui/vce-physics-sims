@@ -5,10 +5,7 @@ import SimCard from './components/SimCard';
 import PhysicsTutor from './components/PhysicsTutor';
 import { PHYSICS_SIMS } from './constants';
 import { AreaOfStudy } from './types';
-import { Search, Layers, GraduationCap, Zap, Github, Twitter, ChevronLeft } from 'lucide-react';
-
-// Import your first simulation (Once you create the file)
-// import ProjectileSim from './sims/u3a1-motion/projectile-motion/ProjectileSim';
+import { Search, Layers, GraduationCap, Zap, ChevronLeft } from 'lucide-react';
 
 const App: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<AreaOfStudy | 'all'>('all');
@@ -16,7 +13,6 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Logic to determine if we are looking at a specific simulation or the home page
   const isHomePage = location.pathname === '/';
 
   const filteredSims = useMemo(() => {
@@ -30,7 +26,6 @@ const App: React.FC = () => {
 
   return (
     <div className="flex min-h-screen bg-zinc-950 text-zinc-100 font-['Plus_Jakarta_Sans']">
-      {/* Sidebar remains constant */}
       <Sidebar 
         onFilter={setActiveFilter} 
         onNavigate={(page) => navigate(page === 'home' ? '/' : `/${page}`)} 
@@ -40,9 +35,7 @@ const App: React.FC = () => {
 
       <main className="flex-grow flex flex-col overflow-y-auto">
         <div className="flex-grow max-w-7xl w-full mx-auto px-6 py-12 lg:px-12">
-          
           <Routes>
-            {/* HOME PAGE ROUTE */}
             <Route path="/" element={
               <div className="page-transition">
                 <header className="mb-12">
@@ -83,32 +76,33 @@ const App: React.FC = () => {
               </div>
             } />
 
-            {/* SIMULATION LOADER ROUTE */}
             <Route path="/sim/:simId" element={
-              <div className="page-transition">
-                <button 
-                  onClick={() => navigate('/')}
-                  className="flex items-center gap-2 text-zinc-500 hover:text-white mb-8 transition-colors"
-                >
+              <div className="page-transition text-center py-20">
+                <button onClick={() => navigate('/')} className="flex items-center gap-2 text-zinc-500 hover:text-white mb-8 mx-auto">
                   <ChevronLeft size={20} /> Back to Hub
                 </button>
-                <div className="bg-zinc-900 rounded-3xl p-8 border border-zinc-800 min-h-[600px] flex items-center justify-center">
-                  <div className="text-center">
-                    <Layers size={48} className="mx-auto text-zinc-700 mb-4" />
-                    <h3 className="text-xl font-bold text-white">Simulation Loading...</h3>
-                    <p className="text-zinc-500 mt-2">Connecting to VCAA Physics Engine</p>
-                  </div>
-                </div>
+                <Layers size={48} className="mx-auto text-zinc-800 mb-4" />
+                <h3 className="text-xl font-bold">Simulation View</h3>
+                <p className="text-zinc-500">Module content loading...</p>
               </div>
             } />
-
-            {/* OTHER PAGES */}
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/legal" element={<LegalPage />} />
           </Routes>
         </div>
 
-        <footer className="p-12 border-t border-zinc-900 mt-auto bg-zinc-950/80 backdrop-blur-xl">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-[11px] text-zinc-500 uppercase tracking-widest font-black">
-             <div className="flex items-center gap-2">
-                <Zap size={14} className="text-amber
+        <footer className="p-12 border-t border-zinc-900 mt-auto bg-zinc-950/80">
+          <div className="max-w-7xl mx-auto flex justify-between items-center text-[10px] text-zinc-500 uppercase tracking-widest font-black">
+            <div className="flex items-center gap-2">
+              <Zap size={14} className="text-amber-500 fill-amber-500" />
+              <span className="text-white">Physics Sim Hub • 2026</span>
+            </div>
+            <span>VCAA Unit 3 & 4</span>
+          </div>
+        </footer>
+      </main>
+
+      <PhysicsTutor />
+    </div>
+  );
+};
+
+export default App;
