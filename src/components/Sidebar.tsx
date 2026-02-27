@@ -1,80 +1,96 @@
 import React from 'react';
-import { Simulation } from '../types';
-import { BookOpen, GraduationCap, Info } from 'lucide-react';
+import { AreaOfStudy } from '../types';
+import { 
+  Zap, 
+  LayoutGrid, 
+  ExternalLink, 
+  Info, 
+  ChevronRight,
+  ShieldCheck
+} from 'lucide-react';
 
 interface SidebarProps {
-  simulation: Simulation;
-  onOpenTheory: () => void;
-  onOpenNotes: () => void;
+  onFilter: (aos: AreaOfStudy | 'all') => void;
+  onNavigate: (page: 'home' | 'about' | 'legal') => void;
+  activeFilter: AreaOfStudy | 'all';
+  activePage: string;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ simulation, onOpenTheory, onOpenNotes }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onFilter, onNavigate, activeFilter, activePage }) => {
   return (
-    <div className="w-80 h-full glass-panel flex flex-col border-r border-white/10">
-      <div className="p-8 border-b border-white/10">
-        <h1 className="text-2xl font-bold text-gold mb-2 leading-tight">{simulation.name}</h1>
-        <div className="space-y-4 mt-6">
-          <div className="flex flex-col">
-            <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Unit</span>
-            <span className="text-slate-200 font-medium">{simulation.unit}</span>
+    <aside className="w-72 bg-zinc-950 border-r border-zinc-900 flex flex-col h-full sticky top-0 overflow-y-auto custom-scrollbar">
+      <div className="p-8 border-b border-zinc-900">
+        <div 
+          className="flex items-center gap-3 cursor-pointer group"
+          onClick={() => { onNavigate('home'); onFilter('all'); }}
+        >
+          <div className="bg-amber-500 p-2 rounded-lg group-hover:rotate-12 transition-transform">
+            <Zap size={20} className="text-black fill-black" />
           </div>
-          <div className="flex flex-col">
-            <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Area of Study</span>
-            <span className="text-slate-200 font-medium">{simulation.aos}</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Topic</span>
-            <span className="text-slate-200 font-medium">{simulation.topic}</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Subtopic</span>
-            <span className="text-slate-200 font-medium">{simulation.subtopic}</span>
+          <div>
+            <h1 className="text-lg font-bold text-white tracking-tight uppercase leading-none">VCE Physics</h1>
+            <p className="text-[10px] text-zinc-500 mt-1 uppercase tracking-widest font-bold">Mr. Eric Chui Hub</p>
           </div>
         </div>
       </div>
 
-      <div className="flex-1 p-8 space-y-4">
-        <div className="p-4 rounded-xl bg-midnight border border-white/5">
-          <div className="flex items-center gap-2 text-gold mb-2">
-            <Info size={16} />
-            <span className="text-xs font-bold uppercase tracking-wider">Overview</span>
+      <nav className="flex-grow p-4 py-6 space-y-8">
+        <div>
+          <h4 className="px-4 text-[11px] font-black text-zinc-600 uppercase tracking-widest mb-4">Areas of Study</h4>
+          <div className="space-y-1">
+            <button 
+              onClick={() => { onNavigate('home'); onFilter('all'); }}
+              className={`w-full flex items-center justify-between px-4 py-2.5 text-sm rounded-xl transition-all ${activeFilter === 'all' && activePage === 'home' ? 'bg-amber-500/10 text-amber-500 font-semibold' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'}`}
+            >
+              <span className="flex items-center gap-3"><LayoutGrid size={16} /> All Simulations</span>
+            </button>
+            {Object.values(AreaOfStudy).map((aos) => (
+              <button 
+                key={aos}
+                onClick={() => { onNavigate('home'); onFilter(aos); }}
+                className={`w-full flex items-center justify-between px-4 py-2.5 text-sm rounded-xl transition-all ${activeFilter === aos && activePage === 'home' ? 'bg-amber-500/10 text-amber-500 font-semibold' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'}`}
+              >
+                <span className="truncate">{aos}</span>
+                <ChevronRight size={14} className={activeFilter === aos ? 'opacity-100' : 'opacity-0'} />
+              </button>
+            ))}
           </div>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            {simulation.description}
-          </p>
         </div>
 
-        <button
-          onClick={onOpenTheory}
-          className="w-full flex items-center justify-between p-4 rounded-xl bg-midnight-light border border-white/10 hover:border-gold/50 hover:bg-midnight transition-all group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-gold/10 text-gold group-hover:bg-gold group-hover:text-midnight transition-colors">
-              <BookOpen size={20} />
-            </div>
-            <span className="font-semibold text-slate-200">Theory</span>
+        <div>
+          <h4 className="px-4 text-[11px] font-black text-zinc-600 uppercase tracking-widest mb-4">Support</h4>
+          <div className="space-y-1">
+            <button 
+              onClick={() => onNavigate('about')}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm rounded-xl transition-all ${activePage === 'about' ? 'bg-amber-500/10 text-amber-500 font-semibold' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'}`}
+            >
+              <Info size={16} /> Educator's Note
+            </button>
+            <button 
+              onClick={() => onNavigate('legal')}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm rounded-xl transition-all ${activePage === 'legal' ? 'bg-amber-500/10 text-amber-500 font-semibold' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'}`}
+            >
+              <ShieldCheck size={16} /> Licensing
+            </button>
           </div>
-          <div className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-        </button>
+        </div>
+      </nav>
 
-        <button
-          onClick={onOpenNotes}
-          className="w-full flex items-center justify-between p-4 rounded-xl bg-midnight-light border border-white/10 hover:border-gold/50 hover:bg-midnight transition-all group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-slate-800 text-slate-400 group-hover:bg-slate-200 group-hover:text-midnight transition-colors">
-              <GraduationCap size={20} />
-            </div>
-            <span className="font-semibold text-slate-200">Teacher's Notes</span>
+      <div className="p-4 bg-zinc-900/20 border-t border-zinc-900">
+        <div className="bg-zinc-900 rounded-xl p-3">
+          <p className="text-[10px] text-zinc-500 font-bold uppercase mb-2">VCAA Quick Links</p>
+          <div className="space-y-1">
+            <a href="https://www.vcaa.vic.edu.au/Documents/exams/physics/physics-formula-sheet.pdf" target="_blank" className="flex items-center justify-between text-[11px] text-zinc-400 hover:text-amber-500">
+              Formula Sheet <ExternalLink size={10} />
+            </a>
+            <a href="https://www.vcaa.vic.edu.au/curriculum/vce/vce-study-designs/physics/Pages/Index.aspx" target="_blank" className="flex items-center justify-between text-[11px] text-zinc-400 hover:text-amber-500">
+              Study Design <ExternalLink size={10} />
+            </a>
           </div>
-        </button>
+        </div>
       </div>
-
-      <div className="p-6 border-t border-white/10 text-center">
-        <p className="text-[10px] text-slate-600 uppercase tracking-widest font-bold">
-          VCAA Physics Simulation Hub
-        </p>
-      </div>
-    </div>
+    </aside>
   );
 };
+
+export default Sidebar;
