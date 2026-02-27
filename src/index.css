@@ -1,7 +1,10 @@
-@import "tailwindcss";
+/* Standard Tailwind v3 Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+/* Custom Variables and Theme Colors */
+:root {
   --color-midnight: #020617;
   --color-midnight-light: #0f172a;
   --color-gold: #fbbf24;
@@ -10,38 +13,57 @@
 
 @layer base {
   body {
-    @apply bg-midnight text-slate-200 font-sans antialiased;
+    background-color: var(--color-midnight);
+    color: #e2e8f0; /* slate-200 */
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-.glass-panel {
-  @apply bg-midnight-light/50 backdrop-blur-md border border-white/10;
+@layer components {
+  .glass-panel {
+    background-color: rgba(15, 23, 42, 0.5); /* midnight-light/50 */
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .gold-gradient {
+    background: linear-gradient(to bottom right, var(--color-gold), var(--color-gold-dark));
+  }
+
+  .markdown-body {
+    color: #cbd5e1; /* slate-300 */
+    line-height: 1.625;
+  }
+
+  .markdown-body h3 {
+    color: var(--color-gold);
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .markdown-body p {
+    margin-bottom: 1rem;
+  }
 }
 
-.gold-gradient {
-  @apply bg-gradient-to-br from-gold to-gold-dark;
-}
-
-.markdown-body {
-  @apply text-slate-300 leading-relaxed;
-}
-
-.markdown-body h3 {
-  @apply text-gold font-bold text-xl mb-4 mt-6;
-}
-
-.markdown-body p {
-  @apply mb-4;
-}
-
+/* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  background: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }

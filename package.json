@@ -1,5 +1,5 @@
 {
-  "name": "vce-physics-simulations",
+  "name": "vce-physics-sims",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -19,7 +19,6 @@
     "tailwind-merge": "^2.2.1"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
