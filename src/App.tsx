@@ -2,10 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import SimCard from './components/SimCard';
-import PhysicsTutor from './components/PhysicsTutor';
 import { PHYSICS_SIMS } from './constants';
 import { AreaOfStudy } from './types';
-import { Search, Layers, GraduationCap, Zap, ChevronLeft } from 'lucide-react';
+import { Search, GraduationCap, Zap, ChevronLeft } from 'lucide-react';
 
 const App: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<AreaOfStudy | 'all'>('all');
@@ -48,13 +47,9 @@ const App: React.FC = () => {
                       <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
                         {activeFilter === 'all' ? 'Unit 3 & 4 Simulations' : activeFilter}
                       </h2>
-                      <p className="text-zinc-400 max-w-2xl leading-relaxed">
-                        Interactive laboratory modules designed for the current VCAA Physics study design. 
-                      </p>
                     </div>
-                    
-                    <div className="relative w-full md:w-80 group">
-                      <Search className="absolute left-4 top-3.5 text-zinc-500 group-focus-within:text-amber-500" size={18} />
+                    <div className="relative w-full md:w-80">
+                      <Search className="absolute left-4 top-3.5 text-zinc-500" size={18} />
                       <input 
                         type="text" 
                         placeholder="Search concepts..."
@@ -81,9 +76,8 @@ const App: React.FC = () => {
                 <button onClick={() => navigate('/')} className="flex items-center gap-2 text-zinc-500 hover:text-white mb-8 mx-auto">
                   <ChevronLeft size={20} /> Back to Hub
                 </button>
-                <Layers size={48} className="mx-auto text-zinc-800 mb-4" />
-                <h3 className="text-xl font-bold">Simulation View</h3>
-                <p className="text-zinc-500">Module content loading...</p>
+                <h3 className="text-xl font-bold">Simulation Module</h3>
+                <p className="text-zinc-500">Coming soon.</p>
               </div>
             } />
           </Routes>
@@ -95,12 +89,9 @@ const App: React.FC = () => {
               <Zap size={14} className="text-amber-500 fill-amber-500" />
               <span className="text-white">Physics Sim Hub • 2026</span>
             </div>
-            <span>VCAA Unit 3 & 4</span>
           </div>
         </footer>
       </main>
-
-      <PhysicsTutor />
     </div>
   );
 };
