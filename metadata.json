@@ -1,5 +1,8 @@
 {
-  "name": "VCAA Physics Simulation Hub",
-  "description": "A comprehensive interface for physics simulations aligned with VCAA Unit 3 and Unit 4 Physics curriculum.",
-  "requestFramePermissions": []
+  "name": "VCE Physics Hub",
+  "description": "A comprehensive interactive simulation hub for VCE Unit 3 & 4 Physics students, featuring study-design aligned modules and an AI physics tutor.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
 }
