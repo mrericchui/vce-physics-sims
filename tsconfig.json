@@ -10,22 +10,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    
-    /* Vibe Coding: Lenient Mode */
     "strict": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noFallthroughCasesInSwitch": true,
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
-
-    /* Path Mapping Fixes */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "motion/react": ["./node_modules/framer-motion"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "vite.config.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }
